@@ -9,10 +9,11 @@ pipeline {
                 script {
                     dir('terraform') {
                         withCredentials([file(credentialsId: 'gcp_credentials', variable:'GCP_CREDENTIALS')]) {
-                            // TODO: fill in the steps necessary to:
-                            terraform init ()
+                            sh '''
+                            export GOOGLE_APPLICATION_CREDENTIALS=$GCP_CREDENTIALS
+                            terraform init
                             terraform apply -auto-approve
-                            // - provision the defined resources
+                            '''
                         }
                     }
                 }
